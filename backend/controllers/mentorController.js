@@ -325,6 +325,13 @@ const assignMentee = async (req, res, next) => {
       return res.status(400).json({ success: false, message: 'Mentee already assigned to you.' });
     }
 
+    // If already assigned to another mentor, remove from that mentor's list
+    if (mentee.assignedMentor) {
+      await User.findByIdAndUpdate(mentee.assignedMentor, {
+        $pull: { assignedMentees: menteeId },
+      });
+    }
+
     // Assign
     await User.findByIdAndUpdate(req.user._id, {
       $addToSet: { assignedMentees: menteeId },

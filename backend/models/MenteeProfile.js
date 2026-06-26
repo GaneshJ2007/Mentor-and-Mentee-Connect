@@ -353,8 +353,6 @@ menteeProfileSchema.pre('save', function (next) {
 });
 
 // Index for common queries
-menteeProfileSchema.index({ userId: 1 });
-menteeProfileSchema.index({ rollNumber: 1 });
 menteeProfileSchema.index({ department: 1, batch: 1 });
 
 const MenteeProfile = mongoose.model('MenteeProfile', menteeProfileSchema);
